@@ -71,6 +71,32 @@ Billing billobj = new Billing();
 		
 		 return output; 
 		}
+		
+		//updating billing details
+		@PUT
+		@Path("/updateBill") 
+		@Consumes(MediaType.APPLICATION_JSON) 
+		@Produces(MediaType.TEXT_PLAIN) 
+		public String updateBill(String form1Data) 
+		{ 
+			
+		//Convert form data  to a JSON object 
+			
+		 JsonObject billobj1 = new JsonParser().parse(form1Data).getAsJsonObject(); 
+		 
+		//Read the values from the JSON object
+		 String billID = billobj1.get("billID").getAsString();
+		 String AccountNumber = billobj1.get("AccountNumber").getAsString(); 
+		 String name = billobj1.get("name").getAsString(); 
+		 String unitCount = billobj1.get("unitCount").getAsString();
+		 String month = billobj1.get("month").getAsString(); 
+		 String issuedDate = billobj1.get("issuedDate").getAsString();
+		 float billAmount = billobj1.get("billAmount").getAsFloat();
+		 
+		 
+		 String out = billobj.updateBill( billID,AccountNumber, name, unitCount, month,billAmount,issuedDate);
+		 return out;
+		}
 	
 	
 

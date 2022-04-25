@@ -210,6 +210,82 @@ public class Billing {
 					}
 					
 					
+					
+					//updateBillDetails
+					public String updateBill(String bid ,String accno, String uname, String unit, String bmonth, float bamount, String issuedDate )
+					{ 
+						 String output = ""; 
+						 try
+						 { 
+						 Connection con = connect(); 
+						 if (con == null) 
+						 {
+							 return "Error while connecting to the database for updating."; 
+							 
+						 } 
+						 // create a prepared statement
+						 String query = "UPDATE billing_tb SET AccountNumber=?,name=?,unitCount=?,month=?,billAmount=?, issuedDate=?  where billID=?";
+							
+						 PreparedStatement preparedStmt = con.prepareStatement(query);
+						 
+							// binding values
+						
+							preparedStmt.setInt(1, Integer.parseInt(accno)); 
+							preparedStmt.setString(2, uname); 
+							preparedStmt.setFloat(3, Float.parseFloat(unit)); 
+							preparedStmt.setString(4, bmonth); 
+							
+							float no = Float.valueOf(unit.toString());
+							float billAmount= calculateBill1(no);
+							
+							preparedStmt.setFloat(5,billAmount); 
+							preparedStmt.setString(6, issuedDate);
+							preparedStmt.setInt(7, Integer.parseInt(bid)); 
+						
+							// execute the statement
+							preparedStmt.execute(); 
+							
+							con.close(); 
+							output = "Billing Details Updating successfully"; 
+					} catch (Exception e) { 
+						output = "Error while Updating the details."; 
+						System.err.println(e.getMessage()); 
+					}
+					return output; 
+				}  
+
+				
+
+					//Calculate bill amount according to usage of unit
+					private float calculateBill1(float no) {
+						
+					float sum=0;
+						 if (no <= 54) {
+							 return  sum=(float) (no*7.85);
+						 }
+						 if (54 < no && no <= 81) {
+							 
+							 return sum= (float) ((54 * 7.85) + ((no - 54) * 10)+ 90);
+						 }
+						 if (81 < no && no <= 108) {
+							 
+							 return sum= (float) ((54 * 7.85) + (27 * 10)+ ((no - 81)*27.75) + 480);
+						 }
+						 
+						 if (108 < no && no <= 162) {
+							 
+							 return sum= (float) ((54 * 7.85) + (27 * 10)+ (27 * 27.75) + ((no - 108)*32) + 480);
+						 }
+						 
+						 if (no >162 )
+						     return sum =  (float) ((54 * 7.85) + (27 * 10)+ (27 * 27.75) +  (54*32) + ((no - 162)*45) +540 );
+						 
+						return sum;
+						
+						
+					}
+					
+					
 
 
 					
