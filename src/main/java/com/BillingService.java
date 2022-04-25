@@ -21,14 +21,15 @@ import model.Billing;
 
 
 
-@Path("/Bill")
+@Path("/ElecBill")
 public class BillingService {
 	
 Billing billobj = new Billing();
 	
-
+    
+    //Add Electric Bill Details
 	@POST
-	@Path("/AddBill")
+	@Path("/AddElecBill")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertUnitCount(@FormParam("AccountNumber") String AccountNumber, 
@@ -40,6 +41,7 @@ Billing billobj = new Billing();
 								  {
 								 
 		
+		
 		String output = billobj.insertUnitCount(AccountNumber, name, unitCount, month,bamount,issuedDate); 
 		
 		return output; 
@@ -47,23 +49,25 @@ Billing billobj = new Billing();
 	
 	
 	
-	//read bill details
+	    //Read All Electric Billing Details
 		@GET
-		@Path("/")
+		@Path("/AllElecBills")
 		@Produces(MediaType.TEXT_HTML)
 		public String readUnitCount() {
 			return billobj.readUnitCount();
 		}
 		
-		//delete billing details
+		//Delete All Electric Billing Details
 		
 		@DELETE
-		@Path("/deleteBill") 
+		@Path("/DeleteElecBill") 
 		@Consumes(MediaType.APPLICATION_XML) 
 		@Produces(MediaType.TEXT_PLAIN) 
 		public String deleteBilling(String form1Data) 
 		{ 
-		//Convert to XML document
+			
+			
+		 //Convert to XML Document
 		 Document docu = Jsoup.parse(form1Data, "", Parser.xmlParser()); 
 		 
 		 String billID = docu.select("billID").text(); 
@@ -72,9 +76,9 @@ Billing billobj = new Billing();
 		 return output; 
 		}
 		
-		//updating billing details
+		//Updating Electric Billing Details
 		@PUT
-		@Path("/updateBill") 
+		@Path("/UpdateElecBill") 
 		@Consumes(MediaType.APPLICATION_JSON) 
 		@Produces(MediaType.TEXT_PLAIN) 
 		public String updateBill(String form1Data) 
@@ -84,14 +88,17 @@ Billing billobj = new Billing();
 			
 		 JsonObject billobj1 = new JsonParser().parse(form1Data).getAsJsonObject(); 
 		 
+		 
+		 
 		//Read the values from the JSON object
 		 String billID = billobj1.get("billID").getAsString();
 		 String AccountNumber = billobj1.get("AccountNumber").getAsString(); 
 		 String name = billobj1.get("name").getAsString(); 
 		 String unitCount = billobj1.get("unitCount").getAsString();
 		 String month = billobj1.get("month").getAsString(); 
-		 String issuedDate = billobj1.get("issuedDate").getAsString();
 		 float billAmount = billobj1.get("billAmount").getAsFloat();
+		 String issuedDate = billobj1.get("issuedDate").getAsString();
+		
 		 
 		 
 		 String out = billobj.updateBill( billID,AccountNumber, name, unitCount, month,billAmount,issuedDate);
