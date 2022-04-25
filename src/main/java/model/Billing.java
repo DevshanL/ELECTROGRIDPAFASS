@@ -176,5 +176,42 @@ public class Billing {
 						return output; 
 					}
 					
+					//Delete billing details
+					
+					public String deleteBilling(String billID) {
+						String output = "";
+				
+						try {
+							Connection con = connect();
+				
+							if (con == null) {
+								return "Error while connecting to the database for deleting.";
+							}
+				
+							// create a prepared statement
+							String query = "delete from billing_tb where billID=?";
+							PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+							// binding values
+							preparedStmt.setInt(1, Integer.parseInt(billID));
+				
+							// execute the statement
+							preparedStmt.execute();
+							con.close();
+				
+							output = "Billing  details Deleted successfully";
+				
+						} catch (Exception e) {
+							output = "Error while deleting the Billing details.";
+							System.err.println(e.getMessage());
+						}
+				
+						return output;
+					}
+					
+					
+
+
+					
 
 }
