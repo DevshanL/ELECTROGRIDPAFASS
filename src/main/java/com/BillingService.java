@@ -54,6 +54,23 @@ Billing billobj = new Billing();
 		public String readUnitCount() {
 			return billobj.readUnitCount();
 		}
+		
+		//delete billing details
+		
+		@DELETE
+		@Path("/deleteBill") 
+		@Consumes(MediaType.APPLICATION_XML) 
+		@Produces(MediaType.TEXT_PLAIN) 
+		public String deleteBilling(String form1Data) 
+		{ 
+		//Convert to XML document
+		 Document docu = Jsoup.parse(form1Data, "", Parser.xmlParser()); 
+		 
+		 String billID = docu.select("billID").text(); 
+		 String output = billobj.deleteBilling(billID); 
+		
+		 return output; 
+		}
 	
 	
 
