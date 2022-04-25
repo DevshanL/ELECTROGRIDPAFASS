@@ -13,10 +13,7 @@
  	
  		<url-pattern>/BillingService/*</url-pattern>
 
- 		<url-pattern>/ComplainService/*</url-pattern>
-
-
- 		<url-pattern>/adminService/*</url-pattern>
+ 	
 
  		
 
