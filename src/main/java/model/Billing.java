@@ -3,6 +3,8 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Billing {
 	//DB connection
@@ -93,6 +95,85 @@ public class Billing {
 						return sum;
 						
 						
+					}
+					
+					//read alredy billed customers
+
+					public String readUnitCount()
+					{ 
+							String output = ""; 
+				 
+						 try
+						 { 
+						
+					     Connection con = connect(); 
+						 if (con == null) 
+						 { 
+							 return "Error while connecting to the database for reading."; 
+						 } 
+						 
+						 
+						 // Prepare the html table to be displayed
+						 output = "<table border='1'>"
+								 +"<tr><th>Bill Number</th>" 
+						 		 + "<th>Account Number</th>" 
+								 +"<th>Name</th>"
+								 + "<th>Unit Count</th>"
+								 + "<th> Month</th>" 
+								 + "<th> Bill Date</th>" 
+								 +"<th> Bill Amount</th>"
+								+ "<th>Update</th><th>Remove</th></tr>"; 
+						 
+						 String query = "select * from billing_tb "; 
+						 
+						 Statement stmt = (Statement) con.createStatement(); 
+						 ResultSet res = ((java.sql.Statement) stmt).executeQuery(query); 
+						 
+						 // iterate through the rows in the result set
+						 while (res.next()) 
+						 { 
+							 String billID = Integer.toString(res.getInt("billID")); 
+							 String AccountNumber = Integer.toString(res.getInt("AccountNumber")); 
+							 String name = res.getString("name"); 
+							 String unitCount = Integer.toString(res.getInt("unitCount")); 
+							 String month = res.getString("month"); 
+							 String billAmount = Float.toString(res.getFloat("billAmount"));
+							 String issuedDate = res.getString("issuedDate"); 
+							 
+							 
+							 // Add a row into the html table
+							 output += "<tr><td>" + billID + "</td>"; 
+							 output += "<td>" + AccountNumber + "</td>"; 
+							 output += "<td>" + name + "</td>"; 
+							 output += "<td>" + unitCount + "</td>";
+							 output += "<td>" + month + "</td>"; 
+							 output += "<td>" + issuedDate + "</td>"; 
+							 output += "<td>" + billAmount + "</td>";
+							 // buttons
+							 output += "<td><input name='btnUpdate' " 
+							 + " type='button' value='Update' onclick = ></td>"
+							 + "<td><form method='post' action= 'updatePayment.jsp'>"
+							 + "<input name='btnRemove' " 
+							 + " type='submit' value='Delete'>"
+							 + "<input name='BuyerID' type='hidden' " 
+							 + " value='" + billID + "'>" 
+							 + "</form></td></tr>"; 
+						 } 
+						 
+						// con.close(); 
+						
+						     // Complete the html table
+						     output += "</table>"; 
+						 } 
+						 
+						catch (Exception e) 
+						 { 
+							 output = "Error while reading the Billing details."; 
+							 System.err.println(e.getMessage()); 
+						 } 
+						
+						
+						return output; 
 					}
 					
 
