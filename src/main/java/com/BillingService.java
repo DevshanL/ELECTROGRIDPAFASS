@@ -45,6 +45,14 @@ Billing billobj = new Billing();
 		return output; 
 	}
 	
+	//read bill details
+		@GET
+		@Path("/")
+		@Produces(MediaType.TEXT_HTML)
+		public String readUnitCount() {
+			return billobj.readUnitCount();
+		}
+	
 	
 
 }
