@@ -57,8 +57,9 @@ ElecBill billobj = new ElecBill();
 			return billobj.readUnitCount();
 		}
 		
-		//Delete All Electric Billing Details
 		
+		
+		//Delete All Electric Billing Details
 		@DELETE
 		@Path("/DeleteElecBill") 
 		@Consumes(MediaType.APPLICATION_XML) 
@@ -75,6 +76,7 @@ ElecBill billobj = new ElecBill();
 		
 		 return output; 
 		}
+		
 		
 		//Updating Electric Billing Details
 		@PUT
