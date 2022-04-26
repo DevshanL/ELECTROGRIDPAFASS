@@ -6,25 +6,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class Billing {
-	//DB connection
+public class ElecBill {
 	
-			//establishing connection
-				private Connection connect() { 
+	           //Connect the database
+               private Connection connect() { 
 					
 					Connection con = null; 
 					try{ 
 						Class.forName("com.mysql.jdbc.Driver"); 
 				 
-						//Provide the correct details: DBServer/DBName, username, password 
-						con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogrid_paf_project", "root", ""); 
+						//Provide The Correct Details: DBServer/DBName, User name, Password 
+						con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogrid_db", "root", ""); 
 					} catch (Exception e) {
 						e.printStackTrace();
 					} 
 					return con; 
 				}
 			
-				 //Add unit count to the user's account
+				 //Unit count for the calculation
 				public String insertUnitCount(String accno, String uname, String unit, String bmonth, String bamount, String issuedDate  ) { 
 							
 							String output = ""; 
@@ -35,11 +34,11 @@ public class Billing {
 								if (con == null) {
 									return "Error while connecting to the database for inserting."; } 
 									
-									// create a prepared statement
-									String query = " insert into billing_tb(`billID`,`AccountNumber`,`name`,`unitCount`,`month`,`billAmount`,`issuedDate`)" + " values (?, ?, ?, ?, ?,?,?)" ; 
+									//Create a prepared statement
+									String query = " insert into elecbilling_tb(`billID`,`AccountNumber`,`name`,`unitCount`,`month`,`billAmount`,`issuedDate`)" + " values (?, ?, ?, ?, ?,?,?)" ; 
 									PreparedStatement preparedStmt = con.prepareStatement(query);
 									 
-									// binding values
+									//Binding values
 									preparedStmt.setInt(1, 0); 
 									preparedStmt.setInt(2, Integer.parseInt(accno)); 
 									preparedStmt.setString(3, uname); 
@@ -55,12 +54,12 @@ public class Billing {
 									preparedStmt.setString(7, issuedDate);
 									
 								
-									// execute the statement
+									//Execute the statement
 									preparedStmt.execute(); 
 									con.close(); 
-									output = "Bill Details Inserted successfully"; 
+									output = "Electric Bill Details Inserted Successfully"; 
 							} catch (Exception e) { 
-								output = "Error while inserting the details."; 
+								output = "Error while inserting the electreic bill."; 
 								System.err.println(e.getMessage()); 
 							}
 							return output; 
@@ -68,7 +67,9 @@ public class Billing {
 
 						
 
-					//Calculate bill amount according to usage of unit
+					//Calculation
+				   //Calculate the bill amount
+				   //use the unit count
 					private float calculateBill(float no) {
 						
 					float sum=0;
@@ -97,8 +98,7 @@ public class Billing {
 						
 					}
 					
-					//read alredy billed customers
-
+					//Retrive bills of users
 					public String readUnitCount()
 					{ 
 							String output = ""; 
@@ -113,7 +113,7 @@ public class Billing {
 						 } 
 						 
 						 
-						 // Prepare the html table to be displayed
+						 //Prepare the html table to be displayed
 						 output = "<table border='1'>"
 								 +"<tr><th>Bill Number</th>" 
 						 		 + "<th>Account Number</th>" 
@@ -124,12 +124,12 @@ public class Billing {
 								 +"<th> Bill Amount</th>"
 								+ "<th>Update</th><th>Remove</th></tr>"; 
 						 
-						 String query = "select * from billing_tb "; 
+						 String query = "select * from elecbilling_tb "; 
 						 
 						 Statement stmt = (Statement) con.createStatement(); 
 						 ResultSet res = ((java.sql.Statement) stmt).executeQuery(query); 
 						 
-						 // iterate through the rows in the result set
+						 //Iterate through the rows in the result set
 						 while (res.next()) 
 						 { 
 							 String billID = Integer.toString(res.getInt("billID")); 
@@ -141,7 +141,7 @@ public class Billing {
 							 String issuedDate = res.getString("issuedDate"); 
 							 
 							 
-							 // Add a row into the html table
+							 //Add into the html table
 							 output += "<tr><td>" + billID + "</td>"; 
 							 output += "<td>" + AccountNumber + "</td>"; 
 							 output += "<td>" + name + "</td>"; 
@@ -149,7 +149,9 @@ public class Billing {
 							 output += "<td>" + month + "</td>"; 
 							 output += "<td>" + issuedDate + "</td>"; 
 							 output += "<td>" + billAmount + "</td>";
-							 // buttons
+							 
+							 
+							 //Buttons
 							 output += "<td><input name='btnUpdate' " 
 							 + " type='button' value='Update' onclick = ></td>"
 							 + "<td><form method='post' action= 'updatePayment.jsp'>"
@@ -160,15 +162,14 @@ public class Billing {
 							 + "</form></td></tr>"; 
 						 } 
 						 
-						// con.close(); 
-						
-						     // Complete the html table
+				
+						     //Complete the html table
 						     output += "</table>"; 
 						 } 
 						 
 						catch (Exception e) 
 						 { 
-							 output = "Error while reading the Billing details."; 
+							 output = "Error While Reading the Electric Billing Details."; 
 							 System.err.println(e.getMessage()); 
 						 } 
 						
@@ -176,7 +177,7 @@ public class Billing {
 						return output; 
 					}
 					
-					//Delete billing details
+					//Delete Electric bills
 					
 					public String deleteBilling(String billID) {
 						String output = "";
@@ -188,21 +189,21 @@ public class Billing {
 								return "Error while connecting to the database for deleting.";
 							}
 				
-							// create a prepared statement
-							String query = "delete from billing_tb where billID=?";
+							//Create a prepared statement
+							String query = "delete from elecbilling_tb where billID=?";
 							PreparedStatement preparedStmt = con.prepareStatement(query);
 				
-							// binding values
+							//Binding values
 							preparedStmt.setInt(1, Integer.parseInt(billID));
 				
-							// execute the statement
+							//Execute the statement
 							preparedStmt.execute();
 							con.close();
 				
-							output = "Billing  details Deleted successfully";
+							output = "Electric Bill Details Deleted Successfully";
 				
 						} catch (Exception e) {
-							output = "Error while deleting the Billing details.";
+							output = "Error While Deleting the Electric Billing Details.";
 							System.err.println(e.getMessage());
 						}
 				
@@ -211,7 +212,7 @@ public class Billing {
 					
 					
 					
-					//updateBillDetails
+					//Update Electric Bill Details
 					public String updateBill(String bid ,String accno, String uname, String unit, String bmonth, float bamount, String issuedDate )
 					{ 
 						 String output = ""; 
@@ -223,14 +224,13 @@ public class Billing {
 							 return "Error while connecting to the database for updating."; 
 							 
 						 } 
-						 // create a prepared statement
-						 String query = "UPDATE billing_tb SET AccountNumber=?,name=?,unitCount=?,month=?,billAmount=?, issuedDate=?  where billID=?";
+						 //Create a prepared statement
+						 String query = "UPDATE elecbilling_tb SET AccountNumber=?,name=?,unitCount=?,month=?,billAmount=?, issuedDate=?  where billID=?";
 							
 						 PreparedStatement preparedStmt = con.prepareStatement(query);
 						 
-							// binding values
-						
-							preparedStmt.setInt(1, Integer.parseInt(accno)); 
+							//Binding values
+						    preparedStmt.setInt(1, Integer.parseInt(accno)); 
 							preparedStmt.setString(2, uname); 
 							preparedStmt.setFloat(3, Float.parseFloat(unit)); 
 							preparedStmt.setString(4, bmonth); 
@@ -242,11 +242,11 @@ public class Billing {
 							preparedStmt.setString(6, issuedDate);
 							preparedStmt.setInt(7, Integer.parseInt(bid)); 
 						
-							// execute the statement
+							//Execute the statement
 							preparedStmt.execute(); 
 							
 							con.close(); 
-							output = "Billing Details Updating successfully"; 
+							output = "Electric Bill Details Updated Successfully"; 
 					} catch (Exception e) { 
 						output = "Error while Updating the details."; 
 						System.err.println(e.getMessage()); 
@@ -256,7 +256,8 @@ public class Billing {
 
 				
 
-					//Calculate bill amount according to usage of unit
+					//Calculation
+					//Calculate the bill amount
 					private float calculateBill1(float no) {
 						
 					float sum=0;
