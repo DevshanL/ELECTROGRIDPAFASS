@@ -20,7 +20,7 @@ public class Inquiry {
 			
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogrid_paf_project", "root", "");
+				con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogrid_db", "root", "");
 				
 				//Connect Successful Message
 				System.out.print("Succesfully connected to the DB");
@@ -45,7 +45,7 @@ public class Inquiry {
 				{return "Error while connecting to the database for inserting.";}
 				
 				//Create a prepared statement 
-				String query = " insert into complain_table (`Complain_id`,`Description`,`complainDate`)"
+				String query = " insert into inquiry_tb(`Complain_id`,`Description`,`complainDate`)"
 						+ " values (?, ?, ?)";
 				
 				PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -91,7 +91,7 @@ public class Inquiry {
 						        +  "<th>Complain</th>"
 								+  "<th>Date</th></tr>";
 						
-						String query = "select * from complain_table";
+						String query = "select * from inquiry_tb";
 						 java.sql.Statement stmt = con.createStatement(); 
 						 ResultSet rs = stmt.executeQuery(query); 
 						
@@ -147,7 +147,7 @@ public class Inquiry {
 						{return "Error while connecting to the database for Updating.";}
 						
 						//create a prepared statement
-						String query = "UPDATE complain_table SET Description=? WHERE Complain_id =?";
+						String query = "UPDATE inquiry_tb SET Description=? WHERE Complain_id =?";
 						
 						PreparedStatement preparedStmt = con.prepareStatement(query);
 						
@@ -184,7 +184,7 @@ public class Inquiry {
 						{return "Error while connecting to the database for deleting.";}
 						
 						//Create a prepared statement
-						String query = "delete from complain_table where Complain_id=?";
+						String query = "delete from inquiry_tb where Complain_id=?";
 					
 						
 						PreparedStatement preparedStmt = con.prepareStatement(query);
