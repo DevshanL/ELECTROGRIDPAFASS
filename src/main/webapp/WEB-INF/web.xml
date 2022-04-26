@@ -11,7 +11,7 @@
 		 <servlet-name>Jersey Web Application</servlet-name>
 
  	
- 		<url-pattern>/BillingService/*</url-pattern>
+ 		<url-pattern>/ElecBillService/*</url-pattern>
 
  	
 

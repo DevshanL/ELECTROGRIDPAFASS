@@ -17,14 +17,14 @@ import org.jsoup.parser.Parser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import model.Billing;
+import model.ElecBill;
 
 
 
 @Path("/ElecBill")
-public class BillingService {
+public class ElecBillService {
 	
-Billing billobj = new Billing();
+ElecBill billobj = new ElecBill();
 	
     
     //Add Electric Bill Details
