@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class Billing {
+public class ElecBill {
 	
 	           //Connect the database
                private Connection connect() { 
