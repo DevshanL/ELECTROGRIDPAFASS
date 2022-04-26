@@ -17,14 +17,14 @@ import org.jsoup.nodes.Document;
 public class CardService {
 
     Card itemObj = new Card();
-
+    //read
     @GET
     @Path("/")
     @Produces(MediaType.TEXT_HTML)
     public String readItems() {
         return itemObj.readItems();
     }
-
+    //insert
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -38,7 +38,7 @@ public class CardService {
     String output = itemObj.insertItem(id,card,name,date,cvc);
         return Response.temporaryRedirect(URI.create("../Card.jsp")).build();
     }
-
+    //update
     @PUT
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -55,7 +55,7 @@ public class CardService {
         String output = itemObj.updateItem(id, card, name, date, cvc);
         return output;
     }
-
+    //Delete
     @DELETE
     @Path("/")
     @Consumes(MediaType.APPLICATION_XML)
