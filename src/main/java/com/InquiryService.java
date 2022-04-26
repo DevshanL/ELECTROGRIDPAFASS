@@ -24,7 +24,9 @@ public class InquiryService {
 	
 	Inquiry comObj = new Inquiry();
 	
-	//insert Complain details
+	
+	
+	//Insert Inquiry Details
 	@POST
 	@Path("/AddInquiry")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -35,6 +37,7 @@ public class InquiryService {
 				@FormParam("complainDate") String comdate )
 			
 	{
+		
 		String output = comObj.insertComplain(Description, comdate);
 		System.out.println(output);
 		return output;
@@ -42,9 +45,11 @@ public class InquiryService {
 	
 	}
 	
+	
+	
 
 
-	//Read Complain details
+	    //Retrive Inquiry Details
 		@GET
 		@Path("/ReadInquiry")
 		@Produces(MediaType.TEXT_HTML)
@@ -54,17 +59,21 @@ public class InquiryService {
 		}
 
 		
-		//Update Complain 
+		
+		
+		//Update Inquiry Details
 		@PUT
 		@Path("/UpdateInquiry")
 		@Consumes(MediaType.APPLICATION_JSON) 
 		@Produces(MediaType.TEXT_PLAIN)
 		public String updateComplain(String form2Data)
 		{
-			//Convert the input string to a JSON object 
+			
+			
+			//Convert the String to a JSON Object 
 			JsonObject comObj2 = new JsonParser().parse(form2Data).getAsJsonObject(); 
 			
-			//Read the values from the JSON object
+			//Read the Values In the JSON Object
 			String Description = comObj2.get("Description").getAsString();
 			String Complain_id  = comObj2.get("Complain_id").getAsString(); 
 
@@ -74,14 +83,18 @@ public class InquiryService {
 			return output;
 		}
 		
-		//delete object details
+		
+		
+		//Delete Inquiry Details
 		@DELETE
 		@Path("/DeleteInquiry")
 		@Consumes(MediaType.APPLICATION_XML)
 		@Produces(MediaType.TEXT_PLAIN)
 		public String deleteCom(String form1Data)
 		{
-			//Convert to XML document
+			
+			
+			//Convert to XML Document
 			Document docum = Jsoup.parse(form1Data, "", Parser.xmlParser());
 			
 			String comID = docum.select("comID").text();
