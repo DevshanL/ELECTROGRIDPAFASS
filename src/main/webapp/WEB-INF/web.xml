@@ -10,9 +10,13 @@
 <url-pattern>/BillingService/*</url-pattern>
 
 
+
 <url-pattern>/InquiryService/*</url-pattern>
 
 
+<url-pattern>/CardService/*</url-pattern>
+
+<url-pattern>/UserService/*</url-pattern>
 
 </servlet-mapping>
 <welcome-file-list>
