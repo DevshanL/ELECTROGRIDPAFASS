@@ -67,7 +67,7 @@ public class ElecBill {
 
 						
 
-					//Calculation
+				   //Calculation
 				   //Calculate the bill amount
 				   //use the unit count
 					private float calculateBill(float no) {
@@ -178,7 +178,6 @@ public class ElecBill {
 					}
 					
 					//Delete Electric bills
-					
 					public String deleteBilling(String billID) {
 						String output = "";
 				
@@ -287,8 +286,4 @@ public class ElecBill {
 					}
 					
 					
-
-
-					
-
 }
