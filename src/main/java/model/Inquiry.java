@@ -23,7 +23,7 @@ public class Inquiry {
 				con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogrid_db", "root", "");
 				
 				//Connect Successful Message
-				System.out.print("Succesfully connected to the DB");
+				System.out.print("Succesfully Connected To The DB");
 				
 			}catch(Exception e)
 			{
@@ -42,7 +42,7 @@ public class Inquiry {
 				Connection con = connect();
 				
 				if(con == null)
-				{return "Error while connecting to the database for inserting.";}
+				{return "Error while connecting to the database for inquiry inserting.";}
 				
 				//Create a prepared statement 
 				String query = " insert into inquiry_tb(`Complain_id`,`Description`,`complainDate`)"
@@ -61,11 +61,11 @@ public class Inquiry {
 				preparedStmt.execute();
 				con.close();
 				
-				output = "Successfully Inserted ";
+				output = "Inquiry Inserted Successfully ";
 				
 			}catch(Exception e)
 			{
-				output = "Error while inserting the Complains ."; 
+				output = "Error while inserting the inquiries ."; 
 				System.err.println(e.getMessage());
 			}
 			return output;
@@ -126,7 +126,7 @@ public class Inquiry {
 					}
 					catch(Exception e)
 					{
-						output = "Error while Reading the Complains ."; 
+						output = "Error while Retriving the Inquiries ."; 
 						System.err.println(e.getMessage());
 					}
 					return output;
@@ -159,11 +159,11 @@ public class Inquiry {
 						//Execute the statement
 						 preparedStmt.execute(); 
 						 con.close(); 
-						 output = "Updated successfully";
+						 output = "Inquiry Updated Successfully";
 						
 					}catch(Exception e)
 					{
-						output = "Error while Updating the Complains ."; 
+						output = "Error while Updating the Inquiry ."; 
 						System.err.println(e.getMessage());
 					}
 					return output;
@@ -197,11 +197,11 @@ public class Inquiry {
 						preparedStmt.execute();
 						con.close();
 						
-						output = "Complain details Deleted successfully";
+						output = "Inquiry Details Deleted Successfully";
 						
 					}
 					catch(Exception e) {
-						output = "Error while deleting the Complain details.";
+						output = "Error While Deleting the Inquiry Details.";
 						System.err.println(e.getMessage());
 					}
 					
